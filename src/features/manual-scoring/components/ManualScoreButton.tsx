@@ -1,3 +1,4 @@
+import { Badge } from "@/src/components/ui/badge";
 import { Button } from "@/src/components/ui/button";
 import {
   Dialog,
@@ -8,25 +9,23 @@ import {
 } from "@/src/components/ui/dialog";
 import {
   Form,
+  FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
-  FormDescription,
-  FormControl,
   FormMessage,
 } from "@/src/components/ui/form";
+import { Slider } from "@/src/components/ui/slider";
 import { Textarea } from "@/src/components/ui/textarea";
+import { useHasAccess } from "@/src/features/rbac/utils/checkAccess";
 import { api } from "@/src/utils/api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { type Score } from "@prisma/client";
-import { useState } from "react";
-import * as z from "zod";
-
-import { useForm } from "react-hook-form";
-import { Slider } from "@/src/components/ui/slider";
-import { useHasAccess } from "@/src/features/rbac/utils/checkAccess";
 import { LockIcon } from "lucide-react";
-import { Badge } from "@/src/components/ui/badge";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
 
 const SCORE_NAME = "manual-score";
 
@@ -190,13 +189,6 @@ export function ManualScoreButton({
               )}
             />
             <div className="flex justify-end space-x-4">
-              <Button type="submit" loading={form.formState.isSubmitting}>
-                {form.formState.isSubmitting
-                  ? "Loading ..."
-                  : score
-                    ? "Update"
-                    : "Create"}
-              </Button>
               {score && (
                 <Button
                   type="button"
@@ -207,6 +199,13 @@ export function ManualScoreButton({
                   Delete
                 </Button>
               )}
+              <Button type="submit" loading={form.formState.isSubmitting}>
+                {form.formState.isSubmitting
+                  ? "Loading ..."
+                  : score
+                    ? "Update"
+                    : "Create"}
+              </Button>
             </div>
           </form>
         </Form>
